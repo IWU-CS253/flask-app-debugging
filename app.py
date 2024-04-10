@@ -80,3 +80,13 @@ def add_entry():
     db.commit()
     flash('New entry was successfully posted')
     return redirect(url_for('show_entries'))
+
+
+@app.route('/favorite/', methods=['POST'])
+def add_favorite():
+    id = request.args['id']
+    db = get_db()
+    db.execute('update entries set favorites=favorites+1 where id=?', [id])
+    db.commit()
+    flash('Favorite added')
+    return redirect(url_for('show_entries'))
